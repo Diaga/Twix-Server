@@ -14,12 +14,41 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include, reverse
 
 from django.conf.urls.static import static
 from django.conf import settings
 
+from rest_framework.response import Response
+from rest_framework.routers import DefaultRouter, APIRootView
+
+
+class TwixAPIRootView(APIRootView):
+    """Custom API root view for Twix"""
+
+    @staticmethod
+    def get_url(request, url):
+        """Return dynamic hyperlink"""
+        return f'http://{request.get_host()}{url}'
+
+    def get(self, request, *args, **kwargs):
+        """Return custom view containing all endpoints"""
+        ret = {
+            'user-view': self.get_url(request, reverse('user:user-view'))
+        }
+        return Response(ret)
+
+
+class Router(DefaultRouter):
+    """Custom router for Twix"""
+    root_view_name = 'twix-api-root'
+    APIRootView = TwixAPIRootView
+    routes = []
+
+
+router = Router()
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/', include('user.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
