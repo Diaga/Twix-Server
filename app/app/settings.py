@@ -26,6 +26,7 @@ SECRET_KEY = '!_z=ha-q*j6bkfl3n3#i8utsdy&w+oo^#q%61c)^$p+k4i$vx_'
 DEBUG = False
 
 ALLOWED_HOSTS = [
+    '127.0.0.1',
     '139.59.1.195',
     'api.knctu.com'
 ]
@@ -129,10 +130,6 @@ MEDIA_URL = '/media/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
-
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-)
 
 # Declare custom user model
 
