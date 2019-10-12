@@ -36,8 +36,8 @@ class TwixAPIRootView(APIRootView):
         ret = {
             'user-view': self.get_url(request, reverse('user:user-view')),
             'task-view': self.get_url(request, reverse('twix:task-view')),
-            'board-view': self.get_url(request, reverse('board:board-view')),
-            'group-view': self.get_url(request, reverse('group:group-view'))
+            'board-view': self.get_url(request, reverse('twix:board-view')),
+            'group-view': self.get_url(request, reverse('twix:group-view'))
         }
         return Response(ret)
 
