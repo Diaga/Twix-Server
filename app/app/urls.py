@@ -34,7 +34,10 @@ class TwixAPIRootView(APIRootView):
     def get(self, request, *args, **kwargs):
         """Return custom view containing all endpoints"""
         ret = {
-            'user-view': self.get_url(request, reverse('user:user-view'))
+            'user-view': self.get_url(request, reverse('user:user-view')),
+            'task-view': self.get_url(request, reverse('twix:task-view')),
+            'board-view': self.get_url(request, reverse('board:board-view')),
+            'group-view': self.get_url(request, reverse('group:group-view'))
         }
         return Response(ret)
 
