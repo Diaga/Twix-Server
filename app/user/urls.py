@@ -23,6 +23,8 @@ router.routes += [
     ),
 ]
 
+router.register('user', views.UserViewSet)
+
 urlpatterns = [
     path('', include(router.urls)),
     path('token/', views.AuthTokenViewSet.as_view(), name='auth-token')

@@ -16,6 +16,10 @@ class UserManager(BaseUserManager):
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
 
+        user.twix_groups.add(Group.objects.create(
+            name='Personal', users=user, admins=user
+        ))
+
         user.save(using=self._db)
 
         return user
@@ -49,3 +53,49 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
+
+
+class Board(models.Model):
+    """Board model"""
+    id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
+    name = models.CharField(max_length=255)
+    is_personal = models.BooleanField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    group = models.ForeignKey('Group', on_delete=models.CASCADE)
+
+    class Meta:
+        app_label = 'twix'
+        default_related_name = 'boards'
+
+    def __str__(self):
+        return self.name
+
+
+class Task(models.Model):
+    """Task model"""
+    id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
+    name = models.CharField(max_length=255)
+    is_done = models.BooleanField()
+    board = models.ForeignKey(Board, on_delete=models.CASCADE)
+
+    class Meta:
+        app_label = 'twix'
+        default_related_name = 'tasks'
+
+    def __str__(self):
+        return self.name
+
+
+class Group(models.Model):
+    """Group model"""
+    id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
+    name = models.CharField(max_length=255)
+    admins = models.ManyToManyField(User, related_name='admins')
+    users = models.ManyToManyField(User)
+
+    class Meta:
+        app_label = 'twix'
+        default_related_name = 'twix_groups'
+
+    def __str__(self):
+        return self.name
