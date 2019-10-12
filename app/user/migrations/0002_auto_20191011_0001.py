@@ -8,27 +8,13 @@ from django.db import migrations
 def apply_migration(apps, migration):
     """Apply App Token data migration"""
     Group = apps.get_model('auth', 'Group')
-    app_token_group = Group.objects.create(
+    Group.objects.create(
         name='App Token'
     )
-
-    User = apps.get_model('user', 'User')
-    user = User.objects.create(
-        email='twix@asperal.com',
-        password=uuid4()
-    )
-
-    user.groups.add(app_token_group)
-    user.save()
 
 
 def revert_migration(apps, migration):
     """Revert App Token data migration"""
-    User = apps.get_model('user', 'User')
-    User.objects.filter(
-        email='twix@asperal.com'
-    ).delete()
-
     Group = apps.get_model('auth', 'Group')
     Group.objects.filter(
         name='App Token'

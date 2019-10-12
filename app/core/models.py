@@ -8,6 +8,7 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, \
 
 class UserManager(BaseUserManager):
     """Manager for User model"""
+
     def create_user(self, email, password, **extra_fields):
         """Creates and saves a new user"""
         if not email:
@@ -16,21 +17,26 @@ class UserManager(BaseUserManager):
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
 
-        user.twix_groups.add(Group.objects.create(
-            name='Personal', users=user, admins=user
-        ))
+        user.save()
 
-        user.save(using=self._db)
+        twix_group = Group.objects.create(name='Personal')
+        twix_group.users.add(user)
+        twix_group.admins.add(user)
+        twix_group.save()
+
+        user.twix_groups.add(twix_group)
+
+        user.save()
 
         return user
 
     def create_superuser(self, email, password):
         """Create and save a superuser in the system"""
-        user = self.create(email=email, password=password)
+        user = self.create_user(email=email, password=password)
         user.is_staff = True
         user.is_superuser = True
 
-        user.save(using=self._db)
+        user.save()
 
         return user
 
@@ -60,7 +66,6 @@ class Board(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     name = models.CharField(max_length=255)
     is_personal = models.BooleanField()
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
     group = models.ForeignKey('Group', on_delete=models.CASCADE)
 
     class Meta:

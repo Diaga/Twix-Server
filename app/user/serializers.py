@@ -7,10 +7,32 @@ from core.models import User
 
 class UserSerializer(serializers.ModelSerializer):
     """Serializer for User model"""
+    password = serializers.CharField(
+        style={'input_type': 'password', },
+        trim_whitespace=False,
+        write_only=True,
+        min_length=5
+    )
+
     class Meta:
         model = User
-        fields = ('id', 'email', 'name')
+        fields = ('id', 'email', 'name', 'password')
         read_only_fields = ('id', )
+
+    def create(self, validated_data):
+        """Creates a new user and returns it"""
+        return User.objects.create_user(**validated_data)
+
+    def update(self, instance, validated_data):
+        """Updates a user correctly"""
+        password = validated_data.pop('password', None)
+        user = super().update(instance, validated_data)
+
+        if password:
+            user.set_password(password)
+            user.save()
+
+        return user
 
 
 class AuthTokenSerializer(serializers.Serializer):
