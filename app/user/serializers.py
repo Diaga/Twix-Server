@@ -17,7 +17,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'email', 'name', 'password')
-        read_only_fields = ('id', )
+        read_only_fields = ()
 
     def create(self, validated_data):
         """Creates a new user and returns it"""
