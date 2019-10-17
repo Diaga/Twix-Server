@@ -43,7 +43,7 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser, PermissionsMixin):
     """User model"""
-    id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
+    id = models.UUIDField(primary_key=True, default=uuid4, editable=True)
     email = models.EmailField(max_length=255, unique=True)
     name = models.CharField(max_length=255)
     is_active = models.BooleanField(default=True)
@@ -63,7 +63,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 class Board(models.Model):
     """Board model"""
-    id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
+    id = models.UUIDField(primary_key=True, default=uuid4, editable=True)
     name = models.CharField(max_length=255)
     is_personal = models.BooleanField()
     group = models.ForeignKey('Group', on_delete=models.CASCADE)
@@ -78,7 +78,7 @@ class Board(models.Model):
 
 class Task(models.Model):
     """Task model"""
-    id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
+    id = models.UUIDField(primary_key=True, default=uuid4, editable=True)
     name = models.CharField(max_length=255)
     is_done = models.BooleanField()
     board = models.ForeignKey(Board, on_delete=models.CASCADE)
@@ -93,7 +93,7 @@ class Task(models.Model):
 
 class Group(models.Model):
     """Group model"""
-    id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
+    id = models.UUIDField(primary_key=True, default=uuid4, editable=True)
     name = models.CharField(max_length=255)
     admins = models.ManyToManyField(User, related_name='admins')
     users = models.ManyToManyField(User)
