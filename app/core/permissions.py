@@ -23,7 +23,7 @@ class IsAppToken(permissions.BasePermission):
 
     def has_permission(self, request, view):
         """Logic for checking IsAppToken"""
-        app_token_group = Group.objects.filter(
+        app_token_group = request.user.groups.filter(
             name='App Token'
-        ).all()
-        return app_token_group in request.user.groups
+        ).exists()
+        return app_token_group

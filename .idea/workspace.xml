@@ -4,6 +4,8 @@
     <list default="true" id="cc58a5b5-a2d6-4682-a4bf-fbe97661ff3a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/app/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/app/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/core/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/core/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/core/permissions.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/core/permissions.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -135,7 +137,8 @@
       <workItem from="1570963309112" duration="606000" />
       <workItem from="1571042311982" duration="35000" />
       <workItem from="1571042849465" duration="198000" />
-      <workItem from="1571337565334" duration="3500000" />
+      <workItem from="1571337565334" duration="3917000" />
+      <workItem from="1571401822110" duration="333000" />
     </task>
     <servers />
   </component>
