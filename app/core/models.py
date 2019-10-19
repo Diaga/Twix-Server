@@ -84,12 +84,49 @@ class Task(models.Model):
     group = models.ForeignKey('Group', on_delete=models.SET_NULL, null=True,
                               blank=True)
 
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        super(Task, self).save(force_insert=force_insert,
+                               force_update=force_update, using=using,
+                               update_fields=update_fields)
+        if self.is_assigned:
+            for user in self.group.users.all():
+                AssignedTask.objects.get_or_create(
+                    user=user, task=self, group=self.group
+                )
+        else:
+            for user in self.group.users.all():
+                assigned_task_exists = AssignedTask.objects.filter(
+                    user=user, task=self, group=self.group
+                ).exists()
+                if assigned_task_exists:
+                    assigned_task = AssignedTask.objects.filter(
+                        user=user, task=self, group=self.group
+                    ).first()
+                    assigned_task.delete()
+
     class Meta:
         app_label = 'twix'
         default_related_name = 'tasks'
 
     def __str__(self):
         return self.name
+
+
+class AssignedTask(models.Model):
+    """Assigned Task model"""
+    id = models.UUIDField(default=uuid4, primary_key=True, editable=False)
+    task = models.ForeignKey(Task, on_delete=models.CASCADE)
+    group = models.ForeignKey('Group', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    is_done = models.BooleanField(default=False)
+
+    class Meta:
+        app_label = 'twix'
+        default_related_name = 'assigned_tasks'
+
+    def __str__(self):
+        return f'{self.task.name} to {self.group.name}'
 
 
 class Group(models.Model):

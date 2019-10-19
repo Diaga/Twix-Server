@@ -60,6 +60,31 @@ router.routes += [
         initkwargs={'suffix': 'Detail'}
     ),
 
+    # Task Assigned View Route
+    Route(
+        url=r'^twix{trailing_slash}tasks{trailing_slash}assigned'
+            r'{trailing_slash}$',
+        mapping={
+            'get': 'view_assigned_task',
+        },
+        name='task-assign-view',
+        detail=False,
+        initkwargs={'suffix': 'View'}
+    ),
+
+    # Task Assigned Detail Route
+    Route(
+        url=r'^twix{trailing_slash}tasks{trailing_slash}assigned'
+            r'{trailing_slash}{lookup}{trailing_slash}$',
+        mapping={
+            'get': 'view_assigned_task_by_id',
+            'patch': 'update_assigned_task_by_id'
+        },
+        name='task-assign-detail',
+        detail=True,
+        initkwargs={'suffix': 'Detail'}
+    ),
+
     # Group View Route
     Route(
         url=r'^twix{trailing_slash}group{trailing_slash}$',
@@ -117,6 +142,8 @@ router.register('twix', views.TaskViewSet)
 router.register('twix', views.TaskDetailViewSet)
 router.register('twix', views.GroupViewSet)
 router.register('twix', views.GroupDetailViewSet)
+router.register('twix', views.AssignedTaskViewSet)
+router.register('twix', views.AssignedTaskDetailViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),

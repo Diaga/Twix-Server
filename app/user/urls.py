@@ -21,6 +21,17 @@ router.routes += [
         detail=False,
         initkwargs={'suffix': 'View'}
     ),
+
+    # User List Route
+    Route(
+        url=r'^users{trailing_slash}$',
+        mapping={
+            'get': 'list_user'
+        },
+        name='user-list',
+        detail=False,
+        initkwargs={'suffix': 'List'}
+    )
 ]
 
 router.register('user', views.UserViewSet)

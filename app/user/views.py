@@ -25,6 +25,16 @@ class UserViewSet(viewsets.GenericViewSet,
 
     queryset = User.objects.all()
 
+    def get_queryset(self):
+        """Remove admin & registration"""
+        queryset = super(UserViewSet, self).get_queryset().exclude(
+            email='admin@asperal.com'
+        ).all()
+        queryset = queryset.exclude(
+            email='register@twix.com'
+        ).all()
+        return queryset
+
     def get_object(self):
         """Return logged in user"""
         return self.request.user
@@ -47,6 +57,19 @@ class UserViewSet(viewsets.GenericViewSet,
     def destroy_user(self, request, *args, **kwargs):
         """Delete logged in user"""
         return self.destroy(request, *args, **kwargs)
+
+    def list_user(self, request, *args, **kwargs):
+        """List all users"""
+        queryset = self.get_queryset()
+        email = request.GET.get('email', None)
+        if email is not None:
+            queryset = queryset.filter(
+                email__regex=fr'^{email}+*'
+            ).all()
+        serializer = self.get_serializer(
+            queryset, many=True
+        )
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class AuthTokenViewSet(ObtainAuthToken):
