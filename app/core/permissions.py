@@ -27,3 +27,12 @@ class IsAppToken(permissions.BasePermission):
             name='App Token'
         ).exists()
         return app_token_group
+
+
+class IsGroupAdmin(permissions.BasePermission):
+    """Global permission to check if user is group admin"""
+    message = 'Not group admin'
+
+    def has_object_permission(self, request, view, obj):
+        """Logic for checking IsGroupAdmin"""
+        return request.user == obj.admin

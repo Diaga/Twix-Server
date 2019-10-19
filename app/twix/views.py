@@ -3,7 +3,9 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from core.models import Board, Task, Group
+from core.models import Board, Task, Group, User
+from core.permissions import IsGroupAdmin, check_permission, \
+    check_object_permission
 
 from . import serializers
 
@@ -168,8 +170,11 @@ class GroupViewSet(viewsets.GenericViewSet,
         """Enforce scope"""
         user = self.request.user
         queryset = super(GroupViewSet, self).get_queryset().filter(
-            users_in=[user, ]
-        ).all()
+            users__in=[user, ]
+        ) | super(GroupViewSet, self).get_queryset().filter(
+            admin=user
+        )
+        queryset = queryset.all()
         return queryset
 
     def view_group(self, request, *args, **kwargs):
@@ -202,16 +207,20 @@ class GroupDetailViewSet(viewsets.GenericViewSet,
         """Enforce scope"""
         user = self.request.user
         queryset = super(GroupDetailViewSet, self).get_queryset().filter(
-            users_in=[user, ]
-        ).all()
+            users__in=[user, ]
+        ) | super(GroupDetailViewSet, self).get_queryset().filter(
+            admin=user
+        )
+        queryset = queryset.all()
         return queryset
 
-    def view_grade_by_id(self, request, *args, **kwargs):
+    def view_group_by_id(self, request, *args, **kwargs):
         """Wrapper around retrieve method for view set distinction"""
         return self.retrieve(request, *args, **kwargs)
 
-    def update_grade_by_id(self, request, *args, **kwargs):
+    def update_group_by_id(self, request, *args, **kwargs):
         """Wrapper around update method for view set distinction"""
+        check_object_permission(request, self, self.get_object())
         return self.update(request, *args, **kwargs)
 
     def update(self, request, *args, **kwargs):
@@ -219,6 +228,56 @@ class GroupDetailViewSet(viewsets.GenericViewSet,
         kwargs.update({'partial': True})
         return super(GroupDetailViewSet, self).update(request, *args, **kwargs)
 
-    def destroy_grade_by_id(self, request, *args, **kwargs):
+    def destroy_group_by_id(self, request, *args, **kwargs):
         """Wrapper around destroy method for view set distinction"""
+        check_object_permission(request, self, self.get_object())
         return self.destroy(request, *args, **kwargs)
+
+    def add_group_member_by_id(self, request, *args, **kwargs):
+        """Add action for group member"""
+        check_object_permission(IsGroupAdmin, request, self, self.get_object())
+        err_msg = 'User id required!'
+        user_id = request.data.get('user')
+        if user_id is not None:
+            err_msg = 'No user with given id found!'
+            user_exists = User.objects.filter(
+                id=user_id
+            ).exists()
+            if user_exists:
+                user = User.objects.filter(
+                    id=user_id
+                ).first()
+                group = self.get_object()
+                group.users.add(user)
+                group.save()
+                return Response(
+                    self.get_serializer(group).data,
+                    status=status.HTTP_200_OK
+                )
+        return Response(err_msg, status=status.HTTP_400_BAD_REQUEST)
+
+    def remove_group_member_by_id(self, request, *args, **kwargs):
+        """Delete action for group member"""
+        print('is')
+        check_object_permission(IsGroupAdmin, request, self, self.get_object())
+        err_msg = 'User id required!'
+        user_id = request.data.get('user')
+        print(user_id)
+        if user_id is not None:
+            err_msg = 'No user with given id found!'
+            user_exists = User.objects.filter(
+                id=user_id
+            ).exists()
+            if user_exists:
+                user = User.objects.filter(
+                    id=user_id
+                ).first()
+                print(user)
+                group = self.get_object()
+                group.users.remove(user)
+                group.save()
+                return Response(
+                    self.get_serializer(group).data,
+                    status=status.HTTP_200_OK
+                )
+        return Response(err_msg, status=status.HTTP_400_BAD_REQUEST)

@@ -84,7 +84,31 @@ router.routes += [
         name='group-detail',
         detail=True,
         initkwargs={'suffix': 'Detail'}
-    )
+    ),
+
+    # Group Add Route
+    Route(
+        url=r'^twix{trailing_slash}group{trailing_slash}{lookup}'
+            r'{trailing_slash}add{trailing_slash}$',
+        mapping={
+            'post': 'add_group_member_by_id'
+        },
+        name='group-add',
+        detail=True,
+        initkwargs={'suffix': 'Add'}
+    ),
+
+    # Group Remove Route
+    Route(
+        url=r'^twix{trailing_slash}group{trailing_slash}{lookup}'
+            r'{trailing_slash}remove{trailing_slash}$',
+        mapping={
+            'post': 'remove_group_member_by_id',
+        },
+        name='group-remove',
+        detail=True,
+        initkwargs={'suffix': 'Remove'}
+    ),
 ]
 
 router.register('twix', views.BoardViewSet)

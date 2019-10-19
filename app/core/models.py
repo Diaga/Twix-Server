@@ -19,14 +19,9 @@ class UserManager(BaseUserManager):
 
         user.save()
 
-        twix_group = Group.objects.create(name='Personal')
+        twix_group = Group.objects.create(name='Personal', admin=user)
         twix_group.users.add(user)
-        twix_group.admins.add(user)
         twix_group.save()
-
-        user.twix_groups.add(twix_group)
-
-        user.save()
 
         return user
 
@@ -66,7 +61,8 @@ class Board(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid4, editable=True)
     name = models.CharField(max_length=255)
     is_personal = models.BooleanField()
-    group = models.ForeignKey('Group', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True,
+                             null=True)
 
     class Meta:
         app_label = 'twix'
@@ -81,7 +77,12 @@ class Task(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid4, editable=True)
     name = models.CharField(max_length=255)
     is_done = models.BooleanField()
+    due_date = models.DateField(blank=True, null=True)
+    remind_me = models.DateTimeField(blank=True, null=True)
     board = models.ForeignKey(Board, on_delete=models.CASCADE)
+    is_assigned = models.BooleanField(default=False)
+    group = models.ForeignKey('Group', on_delete=models.SET_NULL, null=True,
+                              blank=True)
 
     class Meta:
         app_label = 'twix'
@@ -95,7 +96,8 @@ class Group(models.Model):
     """Group model"""
     id = models.UUIDField(primary_key=True, default=uuid4, editable=True)
     name = models.CharField(max_length=255)
-    admins = models.ManyToManyField(User, related_name='admins')
+    admin = models.ForeignKey(User, related_name='admin',
+                              on_delete=models.CASCADE)
     users = models.ManyToManyField(User)
 
     class Meta:
