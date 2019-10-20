@@ -64,7 +64,7 @@ class UserViewSet(viewsets.GenericViewSet,
         email = request.GET.get('email', None)
         if email is not None:
             queryset = queryset.filter(
-                email__regex=fr'^{email}+*'
+                email__regex=rf'{email}'
             ).all()
         serializer = self.get_serializer(
             queryset, many=True
