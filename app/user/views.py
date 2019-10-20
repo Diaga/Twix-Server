@@ -61,6 +61,7 @@ class UserViewSet(viewsets.GenericViewSet,
     def list_user(self, request, *args, **kwargs):
         """List all users"""
         queryset = self.get_queryset()
+        queryset = queryset.exclude(id=request.user.id).all()
         email = request.GET.get('email', None)
         if email is not None:
             queryset = queryset.filter(
