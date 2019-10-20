@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="cc58a5b5-a2d6-4682-a4bf-fbe97661ff3a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/user/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/user/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/twix/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/twix/serializers.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -125,7 +125,8 @@
       <workItem from="1571483503774" duration="160000" />
       <workItem from="1571494238258" duration="4831000" />
       <workItem from="1571504827944" duration="1478000" />
-      <workItem from="1571554365697" duration="336000" />
+      <workItem from="1571554365697" duration="603000" />
+      <workItem from="1571557393425" duration="185000" />
     </task>
     <servers />
   </component>

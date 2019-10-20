@@ -86,7 +86,7 @@ class GroupSerializer(serializers.ModelSerializer):
     admin = UserSerializer(read_only=True)
     admin_id = serializers.PrimaryKeyRelatedField(write_only=True,
                                                   queryset=User.objects.all())
-    users = UserSerializer(many=True)
+    users = UserSerializer(many=True, required=False)
 
     class Meta:
         model = Group
@@ -100,6 +100,7 @@ class GroupSerializer(serializers.ModelSerializer):
         group = Group.objects.create(
             admin=admin_id, **validated_data
         )
-        group.users.set(users)
+        if users is not None:
+            group.users.set(users)
         group.save()
         return group
