@@ -60,7 +60,7 @@ class Board(models.Model):
     """Board model"""
     id = models.UUIDField(primary_key=True, default=uuid4, editable=True)
     name = models.CharField(max_length=255)
-    is_personal = models.BooleanField()
+    is_personal = models.BooleanField(default=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True,
                              null=True)
 
@@ -81,6 +81,7 @@ class Task(models.Model):
     remind_me = models.DateTimeField(blank=True, null=True)
     board = models.ForeignKey(Board, on_delete=models.CASCADE)
     is_assigned = models.BooleanField(default=False)
+    notes = models.TextField(blank=True, null=True)
     group = models.ForeignKey('Group', on_delete=models.SET_NULL, null=True,
                               blank=True)
 

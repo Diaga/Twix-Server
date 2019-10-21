@@ -32,7 +32,7 @@ class TaskSerializer(DynamicModelSerializer):
         model = Task
         fields = (
             'id', 'name', 'is_done', 'is_assigned', 'board', 'group',
-            'due_date', 'remind_me', 'board_id', 'group_id')
+            'due_date', 'remind_me', 'board_id', 'group_id', 'notes')
         read_only_fields = ()
 
     def create(self, validated_data):
