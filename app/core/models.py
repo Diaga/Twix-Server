@@ -1,9 +1,12 @@
 from uuid import uuid4
 
 from django.db import models
+from django.db import transaction
 
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, \
     PermissionsMixin
+
+from fcm_django.models import FCMDevice
 
 
 class UserManager(BaseUserManager):
@@ -90,21 +93,30 @@ class Task(models.Model):
         super(Task, self).save(force_insert=force_insert,
                                force_update=force_update, using=using,
                                update_fields=update_fields)
-        if self.is_assigned:
-            for user in self.group.users.all():
-                AssignedTask.objects.get_or_create(
-                    user=user, task=self, group=self.group
-                )
-        else:
-            for user in self.group.users.all():
-                assigned_task_exists = AssignedTask.objects.filter(
-                    user=user, task=self, group=self.group
-                ).exists()
-                if assigned_task_exists:
-                    assigned_task = AssignedTask.objects.filter(
+        with transaction.atomic():
+            if self.is_assigned:
+                for user in self.group.users.all():
+                    AssignedTask.objects.get_or_create(
                         user=user, task=self, group=self.group
+                    )
+                    device = FCMDevice.objects.filter(
+                        user=user
                     ).first()
-                    assigned_task.delete()
+                    device.send_message(
+                        title='Cask',
+                        body='You have been assigned a new task by '
+                             f'{self.group.admin.name}!'
+                    )
+            else:
+                for user in self.group.users.all():
+                    assigned_task_exists = AssignedTask.objects.filter(
+                        user=user, task=self, group=self.group
+                    ).exists()
+                    if assigned_task_exists:
+                        assigned_task = AssignedTask.objects.filter(
+                            user=user, task=self, group=self.group
+                        ).first()
+                        assigned_task.delete()
 
     class Meta:
         app_label = 'twix'

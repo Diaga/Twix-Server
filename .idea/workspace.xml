@@ -5,7 +5,9 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/app/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/app/settings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/core/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/core/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/twix/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/twix/serializers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/twix/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/twix/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/twix/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/twix/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -130,7 +132,9 @@
       <workItem from="1571554365697" duration="603000" />
       <workItem from="1571557393425" duration="8340000" />
       <workItem from="1571673967246" duration="1186000" />
-      <workItem from="1571676309241" duration="261000" />
+      <workItem from="1571676309241" duration="406000" />
+      <workItem from="1571777614327" duration="143000" />
+      <workItem from="1572553155285" duration="3399000" />
     </task>
     <servers />
   </component>

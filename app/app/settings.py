@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'fcm_django',
     'rest_framework',
     'rest_framework.authtoken',
     'core',
@@ -135,3 +136,12 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 # Declare custom user model
 
 AUTH_USER_MODEL = 'user.User'
+
+# FCM DJANGO SETTINGS
+FCM_DJANGO_SETTINGS = {
+    'APP_VERBOSE_NAME': 'Cask',
+    'FCM_SERVER_KEY': 'AAAAcbU_DnU:APA91bGL_tb6uBK7xr3WfTwe6_62yaAa20sKqGVme'
+                      'z8jVmuoAJhFlXO0UULDcieEAsF4jVGVhRyamm9vj0eIheJ6rZdEzE'
+                      'NWRPWdZVg3uXnq9U_6jkYZvQLXgJdnY606-JEX2MNIH_H7'
+}
+

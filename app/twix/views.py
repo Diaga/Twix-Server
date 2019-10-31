@@ -7,6 +7,8 @@ from core.models import Board, Task, Group, User, AssignedTask
 from core.permissions import IsGroupAdmin, check_permission, \
     check_object_permission
 
+from fcm_django.api.rest_framework import FCMDeviceAuthorizedViewSet
+
 from . import serializers
 
 
@@ -345,3 +347,7 @@ class GroupDetailViewSet(viewsets.GenericViewSet,
                     status=status.HTTP_200_OK
                 )
         return Response(err_msg, status=status.HTTP_400_BAD_REQUEST)
+
+
+class FCMDeviceCustomAuthViewSet(FCMDeviceAuthorizedViewSet):
+    authentication_classes = [TokenAuthentication, ]

@@ -147,4 +147,7 @@ router.register('twix', views.AssignedTaskDetailViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
+    path(r'devices/', views.FCMDeviceCustomAuthViewSet.as_view(
+        {'post': 'create'}),
+         name='create_fcm_device')
 ]
