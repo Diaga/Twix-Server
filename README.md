@@ -1,31 +1,22 @@
-# django-api-template
+# Twix Backend
 [![Build Status](https://travis-ci.com/Diaga/django-api-template.svg?branch=master)](https://travis-ci.com/Diaga/django-api-template)
 
-Template for creating robust APIs with django rest framework!
+This project is templated from [Django API Template](https://github.com/Diaga/django-api-template)(A template for creating robust APIs with django rest framework!)
 
-This template contains configured Dockerfile, docker-compose and .travis.yml files.
+## Documentation
 
-## Project Structure
-All models are placed in models.py file in 'app' folder along with unit tests.
+In four simple steps, you will be able to run this server on your own machine!
 
-All unit tests are placed in the 'tests' folder inside each app.
-
-Each section of the API is allotted its own app inside django.
-
-## Setup
-Update requirements.txt file with latest versions of libraries.
-
-Set suitable user & password for database in docker-compose file.
-
-## Commands
-* Start new app:
-    ```shell script
-    python manage.py template_startapp <app_name>
+* Clone the git repository
+* Install the required dependencies by running the following command:
     ```
-* Run unit tests:
-    ```shell script
-    python manage.py test && flake8
+    pip install -r requirements.txt
     ```
-
-## ToDo
-Add commands to easily create customized user
+* This project uses sqlite as database, therefore, there is no need for setup. Simply run migrations through following command: 
+    ```
+    python app/manage.py migrate
+    ```
+* Finally, run the last command and the API will be accessible on your machine through 127.0.0.1:8000:
+    ```
+    python app/manage.py runserver
+    ```
