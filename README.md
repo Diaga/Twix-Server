@@ -3,7 +3,7 @@
 
 This project is templated from [Django API Template](https://github.com/Diaga/django-api-template)(A template for creating robust APIs with django rest framework!)
 
-The Twix Server is the backend REST service for the frontend application [Twix](https://github.com/Diaga/Twix) being developed for AppCon'19 by Telenor Microfinance Bank.
+The project codenamed as "Twix Server" while the real application label being **Cask**, is the backend REST service for the frontend application [Twix](https://github.com/Diaga/Twix) being developed for AppCon'19 by Telenor Microfinance Bank.
 
 ## Documentation
 
