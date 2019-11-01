@@ -7,7 +7,7 @@ The Twix Server is the backend REST service for the frontend application [Twix](
 
 ## Documentation
 
-In four simple steps, you will be able to run this server on your own machine!
+In four simple steps, you will be able to run this server on your own machine! Using PyCharm IDE is recommended, however, you can use your favorite Python IDE.
 
 * Clone the git repository
 * Install the required dependencies by running the following command:
