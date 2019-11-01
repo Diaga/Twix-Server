@@ -3,6 +3,8 @@
 
 This project is templated from [Django API Template](https://github.com/Diaga/django-api-template)(A template for creating robust APIs with django rest framework!)
 
+The Twix Server is the backend REST service for the frontend application [Twix](https://github.com/Diaga/Twix) being developed for AppCon'19 by Telenor Microfinance Bank.
+
 ## Documentation
 
 In four simple steps, you will be able to run this server on your own machine!
@@ -20,6 +22,17 @@ In four simple steps, you will be able to run this server on your own machine!
     ```
     python app/manage.py runserver
     ```
+You can visit 127.0.0.1:8000/api for a list of available endpoints.    
+
+## Django Admin
+
+You can leverage the power of django admin to have an overview of this project.
+
+* Create a superuser using the following command:
+    ```
+    python app/manage.py createsuperuser
+    ```
+* You can now login using the details entered in the above command at 127.0.0.1:8000/admin
 
 ## External Link
 This project is hosted at [here](https://api.knctu.com/api) for AppCon'19.
