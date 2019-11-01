@@ -36,3 +36,10 @@ You can leverage the power of django admin to have an overview of this project.
 
 ## External Link
 This project is hosted at [here](https://api.knctu.com/api) for AppCon'19.
+
+## Dependencies
+Twix Server has the following dependencies:
+
+* [Django](https://github.com/django/django)
+* [Django REST Framework](https://github.com/encode/django-rest-framework)
+* [fcm-django](https://github.com/xtrinch/fcm-django)
