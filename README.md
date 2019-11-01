@@ -20,3 +20,6 @@ In four simple steps, you will be able to run this server on your own machine!
     ```
     python app/manage.py runserver
     ```
+
+## External Link
+This project is hosted at [here](https://api.knctu.com/api) for AppCon'19.
